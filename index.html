@@ -66,6 +66,7 @@
             let content = ele.val().trim();
             if (!content) {
                 ele.shake(2, 10, 400);
+                return null;
             }
             target.attr('disabled', '');
             $.post('', {

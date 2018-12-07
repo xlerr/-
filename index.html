@@ -43,5 +43,43 @@
     <p class="text-muted">????? ??????? ???????????.</p>
     <p class="text-muted">?????????!!!!</p>
 </div>
+<script src="./js/jquery.min.js"></script>
+<script>
+    jQuery.fn.shake = function (intShakes, intDistance, intDuration) {
+        this.each(function () {
+            let jqNode = $(this);
+            jqNode.css({position: 'relative'});
+            for (var x = 1; x <= intShakes; x++) {
+                jqNode.animate({left: (intDistance * -1)}, (((intDuration / intShakes) / 4)))
+                    .animate({left: intDistance}, ((intDuration / intShakes) / 2))
+                    .animate({left: 0}, (((intDuration / intShakes) / 4)));
+            }
+        });
+        return this;
+    };
+
+    $(function () {
+
+        $('#submit').click(function () {
+            let target = $(this);
+            let ele = $('input[name="?"]');
+            let content = ele.val().trim();
+            if (!content) {
+                ele.shake(2, 10, 400);
+            }
+            target.attr('disabled', '');
+            $.post('', {
+                content: content,
+            }, function (res) {
+                if (res.code) {
+                    console.log(res.msg);
+                } else {
+                    ele.val('');
+                }
+                target.removeAttr('disabled');
+            });
+        })
+    });
+</script>
 </body>
 </html>

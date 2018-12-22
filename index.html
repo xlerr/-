@@ -56,16 +56,13 @@
             }
             ele.val(null).attr('placeholder', '> >>');
             target.text('>').attr('disabled', true);
-            $.ajax({
-                url: 'http://47.96.3.147/',
-                type: 'GET',
-                dataType: "jsonp",
-                data: {
-                    d: content.substr(0, 300),
-                },
-                jsonp: 'r',
-                jsonpCallback: 'c',
-                success: function (res) {
+            $.get('http://47.96.3.147/', {
+                d: content.substr(0, 300),
+                t: (new Date()).getTime(),
+            }, function (res) {
+                if (res.code) {
+                    console.log(res.msg);
+                } else {
                     ele.attr('placeholder', '? ? ?').focus();
                     target.text('?').removeAttr('disabled');
                 }

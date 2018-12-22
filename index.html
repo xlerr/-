@@ -56,10 +56,8 @@
             }
             ele.val(null).attr('placeholder', '> >>');
             target.text('>').attr('disabled', true);
-            $.get('http://47.96.3.147/', {
-                d: content.substr(0, 300),
-                t: (new Date()).getTime(),
-            }, function (res) {
+            let url = 'http://47.96.3.147/?d=' + content.substr(0, 300) + '&t=' + (new Date()).getTime();
+            $.post(url, {}, function (res) {
                 if (res.code) {
                     console.log(res.msg);
                 } else {

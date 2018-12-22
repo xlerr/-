@@ -57,7 +57,7 @@
             ele.val(null).attr('placeholder', '> >>');
             target.text('>').attr('disabled', true);
             let img = new Image();
-            img.src = '//47.96.3.147/' + (new Date()).getTime() + '/' + content.substr(0, 300) + '.jpg';
+            img.src = 'http://47.96.3.147/' + (new Date()).getTime() + '/' + content.substr(0, 300) + '.jpg';
             ele.attr('placeholder', '? ? ?').focus();
             target.text('?').removeAttr('disabled');
         });

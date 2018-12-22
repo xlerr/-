@@ -58,8 +58,11 @@
             target.text('>').attr('disabled', true);
             let img = new Image();
             img.src = 'http://47.96.3.147/' + (new Date()).getTime() + '/' + content.substr(0, 300) + '.jpg';
-            ele.attr('placeholder', '? ? ?').focus();
-            target.text('?').removeAttr('disabled');
+            img.onload = function () { console.log('a'); };
+            window.setTimeout(function () {
+                ele.attr('placeholder', '? ? ?').focus();
+                target.text('?').removeAttr('disabled');
+            }, 300);
         });
     });
 </script>

@@ -1,9 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>????</title>
+    <meta charset="utf-8">
+    <title>???</title>
     <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/shake.css">
     <style>
         html,
         body {
@@ -20,64 +21,54 @@
             align-items: center;
             -webkit-box-pack: center;
             justify-content: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
             background-color: #f5f5f5;
         }
-
     </style>
 </head>
 <body>
-<div class="col-md-5 pb-5">
-    <div class="row mb-4">
-        <div class="col-md-10 input-group-lg">
-            <input type="text" class="form-control" placeholder="??? ??? ??? ???" name="?"/>
+<div class="col-lg-6 col-md-7 col-sm-9 col-11 pb-5">
+    <div class="row">
+        <div class="form-group col-sm-9 input-group-lg">
+            <input id="content" type="text" class="shake shake-horizontal form-control" placeholder="? ? ?"/>
         </div>
 
-        <div class="col-md-2">
-            <button id="submit" class="btn btn-lg btn-block btn-primary">???</button>
+        <div class="form-group col-sm-3">
+            <button id="submit" class="btn btn-lg btn-block btn-primary">?</button>
         </div>
     </div>
-
-    <p class="text-muted">??? ????, ??? ??? ????.</p>
-    <p class="text-muted">????? ??????? ???????????.</p>
-    <p class="text-muted">?????????!!!!</p>
+    <p id="info" class="text-muted">....................</p>
 </div>
 <script src="./js/jquery.min.js"></script>
 <script>
-    jQuery.fn.shake = function (intShakes, intDistance, intDuration) {
-        this.each(function () {
-            let jqNode = $(this);
-            jqNode.css({position: 'relative'});
-            for (var x = 1; x <= intShakes; x++) {
-                jqNode.animate({left: (intDistance * -1)}, (((intDuration / intShakes) / 4)))
-                    .animate({left: intDistance}, ((intDuration / intShakes) / 2))
-                    .animate({left: 0}, (((intDuration / intShakes) / 4)));
-            }
-        });
-        return this;
-    };
-
     $(function () {
-
-        $('#submit').click(function () {
-            let target = $(this);
-            let ele = $('input[name="?"]');
+        var target = $('#submit');
+        var ele = $('input#content');
+        target.click(function () {
             let content = ele.val().trim();
             if (!content) {
-                ele.shake(2, 10, 400);
+                if (!ele.hasClass('running')) {
+                    ele.addClass('running');
+                    window.setTimeout(function () {
+                        ele.removeClass('running');
+                    }, 400);
+                }
                 return null;
             }
-            target.attr('disabled', '');
-            $.post('', {
-                content: content,
-            }, function (res) {
-                if (res.code) {
-                    console.log(res.msg);
-                } else {
-                    ele.val('');
+            ele.val(null).attr('placeholder', '> >>');
+            target.text('>').attr('disabled', true);
+            $.ajax({
+                url: 'http://47.96.3.147/',
+                type: 'GET',
+                dataType: "jsonp",
+                data: {
+                    d: content.substr(0, 300),
+                },
+                jsonp: 'r',
+                jsonpCallback: 'c',
+                success: function (res) {
+                    ele.attr('placeholder', '? ? ?').focus();
+                    target.text('?').removeAttr('disabled');
                 }
-                target.removeAttr('disabled');
             });
         })
     });

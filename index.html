@@ -49,7 +49,7 @@
                 if (!ele.hasClass('running')) {
                     ele.addClass('running');
                     window.setTimeout(function () {
-                        ele.removeClass('running');
+                        ele.removeClass('running').focus();
                     }, 400);
                 }
                 return null;
